@@ -1,7 +1,7 @@
 # Tombola — Frontend
 
 Progetto Angular 20 con **servizi già pronti** per collegarsi al backend.  
-Le pagine `/banco` e `/giocatore` sono vuote: vanno implementate dal team FE.
+Le pagine `/banco` e `/giocatore` sono vuote.
 
 ## Avvio
 
