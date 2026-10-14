@@ -3,6 +3,8 @@
 Progetto Angular 20 con **servizi già pronti** per collegarsi al backend.  
 Le pagine `/banco` e `/giocatore` sono vuote.
 
+PRIMARY COLOR NESEA: #EC008C
+
 
 ## Avvio
 
