@@ -1,0 +1,281 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: #f5f7fa;
+}
+
+.player-container {
+  max-width: 540px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* HEADER */
+
+.player-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.status-pill,
+.room-pill {
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+
+  border-radius: 24px;
+  font-weight: 600;
+}
+
+.connected {
+  color: #18a96b;
+  background: #eafbf3;
+  border: 1px solid #b8ebd2;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+  background: #18a96b;
+
+  margin-right: 8px;
+}
+
+.room-pill {
+  background: white;
+  border: 1px solid #dfe5ed;
+}
+
+.last-extracted-card {
+  flex: 1;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: white;
+
+  border-radius: 24px;
+  border: 1px solid #dfe5ed;
+
+  padding: 10px 16px;
+}
+
+.last-extracted-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.last-extracted-info small {
+  color: #98a2b3;
+  font-size: 11px;
+}
+
+.number-circle {
+  width: 48px;
+  height: 48px;
+
+  border-radius: 50%;
+  background: #ec008c;
+
+  color: white;
+  font-weight: 700;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* CARD */
+
+.content-card {
+  background: white;
+
+  border: 1px solid #e4e7ec;
+
+  border-radius: 24px;
+
+  padding: 20px;
+
+  margin-bottom: 20px;
+}
+
+.card-header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+.title-wrapper {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.icon-box {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 12px;
+
+  background: #fff0f8;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #ec008c;
+}
+
+.card-title {
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.card-subtitle {
+  color: #667085;
+  font-size: 0.875rem;
+}
+
+.marked-pill {
+  border-radius: 20px;
+
+  border: 1px solid #f2b8db;
+
+  color: #ec008c;
+
+  padding: 6px 14px;
+
+  font-size: 0.9rem;
+}
+
+/* GRID */
+
+.bingo-grid {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 8px;
+}
+
+.grid-cell {
+  aspect-ratio: 1;
+
+  border: 1px solid #dde3eb;
+
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 700;
+  font-size: 1.1rem;
+
+  background: white;
+}
+
+.grid-cell.marked {
+  background: #ec008c;
+  border-color: #ec008c;
+  color: white;
+}
+
+.grid-cell.empty {
+  border-style: dashed;
+  color: transparent;
+}
+
+/* LEGEND */
+
+.legend {
+  margin-top: 18px;
+
+  display: flex;
+  justify-content: space-between;
+
+  color: #667085;
+  font-size: .9rem;
+}
+
+.legend-dot {
+  display: inline-block;
+
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.extracted {
+  background: #ec008c;
+}
+
+.waiting {
+  border: 1px solid #cdd5df;
+}
+
+/* CLAIM */
+
+.claim-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+.claim-available {
+  background: #eafbf3;
+
+  color: #18a96b;
+
+  border-radius: 16px;
+
+  padding: 4px 14px;
+
+  font-size: .875rem;
+
+  font-weight: 600;
+}
+
+.claim-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.claim-btn {
+  height: 60px;
+
+  border: 1px solid #dbe1e8;
+
+  background: white;
+
+  border-radius: 16px;
+
+  font-weight: 600;
+
+  transition: .2s;
+}
+
+.claim-btn:hover:not(:disabled) {
+  border-color: #ec008c;
+  color: #ec008c;
+}
+
+.claim-btn:disabled {
+  opacity: .5;
+}
+
+.tombola {
+  grid-column: span 2;
+}

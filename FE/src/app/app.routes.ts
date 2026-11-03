@@ -1,11 +1,13 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home';
+import { Home } from './pages/home/home';
 import { BancoComponent } from './pages/banco/banco.component';
-import { GiocatoreComponent } from './pages/giocatore/giocatore.component';
+import { Giocatore } from './pages/giocatore/giocatore';
+import { JoinPlayer } from './pages/join-player/join-player';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: Home },
   { path: 'banco', component: BancoComponent },
-  { path: 'giocatore', component: GiocatoreComponent },
+  { path: 'giocatore', component: Giocatore },
+  { path: 'unisciti-giocatore', component: JoinPlayer },
   { path: '**', redirectTo: '' },
 ];

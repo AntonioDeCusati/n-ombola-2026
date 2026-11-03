@@ -1,0 +1,132 @@
+<!-- <h1>Giocatore</h1>
+<p>Da implementare. Usa <code>SocketService</code> e <code>GameSessionService</code> — vedi <code>FE/README.md</code>.</p>
+<a routerLink="/">← Home</a> -->
+<div class="player-container">
+  <!-- HEADER -->
+
+  <div class="player-header">
+    <div class="status-pill connected">
+      <span class="dot"></span>
+      CONNESSO
+    </div>
+
+    <div class="room-pill">#{{ room()?.id }}</div>
+
+    <div class="last-extracted-card">
+      <div class="last-extracted-info">
+        <small>ULTIMO ESTRATTO</small>
+
+        <strong> {{ extractedNumbers().at(-1) ?? '-' }} </strong>
+      </div>
+
+      <div class="number-circle">{{ extractedNumbers().at(-1) ?? '-' }}</div>
+    </div>
+  </div>
+
+  <!-- CARTELLA -->
+
+  @if (cartella(); as card) {
+
+  <div class="content-card">
+    <div class="card-header-section">
+      <div class="title-wrapper">
+        <div class="icon-box">
+          <i class="bi bi-grid-3x3-gap-fill"></i>
+        </div>
+
+        <div>
+          <div class="card-title">Cartella #{{ card.id }}</div>
+
+          <div class="card-subtitle">Serie {{ card.id }}</div>
+        </div>
+      </div>
+
+      <div class="marked-pill">
+        Marcati:
+        <strong>{{ markedCount() }}/15</strong>
+      </div>
+    </div>
+
+    <!-- GRID -->
+
+    <div class="bingo-grid">
+      @for (row of card.grid; track $index) { @for (cell of row; track $index) {
+
+      <div
+        class="grid-cell"
+        [class.marked]="isMarked(cell)"
+        [class.empty]="cell === null"
+      >
+        @if (cell !== null) { {{ cell }} }
+      </div>
+
+      } }
+    </div>
+
+    <div class="legend">
+      <div>
+        <span class="legend-dot extracted"></span>
+        Estratto / Segnato
+      </div>
+
+      <div>
+        <span class="legend-dot waiting"></span>
+        In attesa
+      </div>
+    </div>
+  </div>
+
+  <!-- VINCITE -->
+
+  <div class="content-card">
+    <div class="claim-header">
+      <h5 class="mb-0">RECLAMA VINCITA</h5>
+
+      <span class="claim-available"> Vincita disponibile </span>
+    </div>
+
+    <div class="claim-grid">
+      <button
+        type="button"
+        class="claim-btn"
+        [disabled]="!canClaimWinType('ambo')"
+      >
+        1. Ambo
+      </button>
+
+      <button
+        type="button"
+        class="claim-btn"
+        [disabled]="!canClaimWinType('terna')"
+      >
+        2. Terna
+      </button>
+
+      <button
+        type="button"
+        class="claim-btn"
+        [disabled]="!canClaimWinType('quaterna')"
+      >
+        3. Quaterna
+      </button>
+
+      <button
+        type="button"
+        class="claim-btn"
+        [disabled]="!canClaimWinType('cinquina')"
+      >
+        4. Cinquina
+      </button>
+
+      <button
+        type="button"
+        class="claim-btn tombola"
+        [disabled]="!canClaimWinType('tombola')"
+      >
+        5. Tombola
+      </button>
+    </div>
+  </div>
+
+  }
+</div>

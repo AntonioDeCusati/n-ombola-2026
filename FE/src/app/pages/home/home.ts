@@ -8,16 +8,16 @@ import { Router } from '@angular/router';
   styleUrl: './home.scss',
   imports: [],
 })
-export class HomeComponent {
+export class Home {
   
   private readonly router: Router = inject(Router);
 
   enterAsPlayer(): void {
-    this.router.navigate(['/player']);
+    this.router.navigate(['/unisciti-giocatore']);
   }
 
   enterAsHost(): void {
-    this.router.navigate(['/host']);
+    this.router.navigate(['/banco']);
   }
 
 }

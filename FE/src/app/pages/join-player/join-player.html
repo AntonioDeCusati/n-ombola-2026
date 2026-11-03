@@ -1,0 +1,119 @@
+<div class="join-page">
+  <div class="page-header">
+    <button class="back-button" (click)="goback()">
+      <i class="bi bi-arrow-left"></i>
+    </button>
+
+    <div class="header-content">
+      <h1>Entra nella Partita</h1>
+      <div class="subtitle">Tombola Aziendale Festiva</div>
+    </div>
+
+    <div class="connection-pill">
+      <i class="bi bi-wifi"></i>
+      CONNESSO
+    </div>
+  </div>
+
+  <div class="join-layout">
+    <div class="left-column">
+      <!-- CODICE STANZA -->
+
+      <div class="join-card">
+        <div class="section-header">
+          <span class="section-title"> CODICE STANZA (4 CIFRE) </span>
+
+          <span class="section-helper"> Digita sotto </span>
+        </div>
+
+        <div class="code-grid">
+          @for (digit of roomDigits(); track $index) {
+
+          <div
+            class="digit-box"
+            [class.active]="$index === roomCode().length - 1"
+          >
+            {{ digit }}
+          </div>
+
+          }
+        </div>
+
+        @if(roomCode().length === 4) {
+
+        <div class="room-found">
+          ● Stanza {{ roomCode() }} trovata • In attesa del Banco
+        </div>
+
+        }
+      </div>
+
+      <!-- NOME -->
+
+      <div class="join-card">
+        <div class="name-label">IL TUO NOME O NICKNAME</div>
+
+        <input
+          class="name-input"
+          [value]="playerName()"
+          (input)="playerName.set($any($event.target).value)"
+          placeholder="Giulia M."
+        />
+      </div>
+
+      <!-- INFO -->
+
+      <div class="info-card">
+        <i class="bi bi-qr-code"></i>
+
+        <div>
+          <div class="info-title">Supporto link diretto & QR Code</div>
+
+          <div class="info-subtitle">Inquadra dal tavolo di sala</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="right-column">
+      <div class="keypad-card">
+        <div class="keypad">
+          @for(num of [1,2,3,4,5,6,7,8,9]; track num){
+
+          <button
+            type="button"
+            class="key-btn"
+            (click)="appendDigit(num.toString())"
+          >
+            {{ num }}
+          </button>
+
+          }
+
+          <button type="button" class="key-btn danger" (click)="clearCode()">
+            C
+          </button>
+
+          <button type="button" class="key-btn" (click)="appendDigit('0')">
+            0
+          </button>
+
+          <button
+            type="button"
+            class="key-btn secondary"
+            (click)="removeLastDigit()"
+          >
+            <i class="bi bi-backspace"></i>
+          </button>
+        </div>
+
+        <button
+          class="join-button"
+          [disabled]="roomCode().length !== 4 || joining()"
+          (click)="join()"
+        >
+          ENTRA IN STANZA
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
