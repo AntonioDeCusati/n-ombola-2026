@@ -1,0 +1,118 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #f6f7f9;
+}
+
+.page-container {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+.logo-container {
+  text-align: center;
+  margin: 100px 0 80px;
+}
+
+.logo-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #101828;
+  margin: 0;
+}
+
+.role-card {
+  position: relative;
+  padding: 24px;
+  background: #fff;
+  border: 1px solid #dfe3ea;
+  border-radius: 24px;
+  box-shadow: 0 4px 10px rgb(15 23 42 / 4%);
+}
+
+.role-badge {
+  position: absolute;
+  top: -13px;
+  right: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 999px;
+}
+
+.role-badge-player {
+  color: white;
+  background: #f5008f;
+}
+
+.role-badge-host {
+  background: #eef2f6;
+  color: #667085;
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 8px;
+}
+
+.role-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.6rem;
+}
+
+.player-icon {
+  border: 2px solid #f5008f;
+  color: #f5008f;
+}
+
+.host-icon {
+  border: 2px solid #cfd5df;
+  color: #74829a;
+}
+
+.role-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #172033;
+}
+
+.role-description {
+  margin-top: 8px;
+  color: #667085;
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+hr {
+  margin: 24px 0;
+  color: #e8ecf2;
+}
+
+.btn-player {
+  background: #f5008f;
+  border: none;
+  color: white;
+  height: 56px;
+  border-radius: 16px;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.btn-player:hover {
+  background: #d9007d;
+}
+
+.btn-host {
+  background: white;
+  border: 1px solid #d7dce4;
+  color: #1f2937;
+  height: 56px;
+  border-radius: 16px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
