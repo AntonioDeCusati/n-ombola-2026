@@ -17,7 +17,7 @@ export class Home {
   }
 
   enterAsHost(): void {
-    this.router.navigate(['/banco']);
+    this.router.navigate(['/crea-banco']);
   }
 
 }

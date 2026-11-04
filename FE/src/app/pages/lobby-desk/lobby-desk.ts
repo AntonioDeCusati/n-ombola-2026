@@ -67,6 +67,10 @@ export class LobbyDesk implements OnInit {
       }
 
       this.room.set(response.room);
+      sessionStorage.setItem(
+        'roomId',
+        response.room.id,
+      );
 
       this.players.set(response.room.players);
     });
@@ -87,8 +91,8 @@ export class LobbyDesk implements OnInit {
       if (!response.success) {
         return;
       }
+    this.router.navigate(['/banco']);
 
-      console.log('Partita avviata');
     });
   }
 

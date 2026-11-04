@@ -1,0 +1,48 @@
+<div class="game-page">
+  <header class="christmas-header">
+        <button class="header-action" (click)="goBack()">
+      <i class="bi bi-box-arrow-left"></i>
+      Esci
+    </button>
+    <img src="nesea-natalizia.png" class="hero-logo" alt="Nesea Natale" />
+
+    <div class="hero-content">
+      <div class="hero-badge">🎄 Tombola Natalizia Nesea 2026 🎄</div>
+      <h1>Tombola Aziendale</h1>
+    </div>
+  </header>
+
+  <section class="hero-number">
+    <div class="last-number-card">
+      <span class="number-label"> ULTIMO NUMERO ESTRATTO </span>
+
+      <div class="last-number">{{ lastNumber() ?? '--' }}</div>
+
+      <div class="number-counter">Estratti {{ extractedCount() }}/90</div>
+
+      <button
+        class="extract-btn"
+        [disabled]="loading()"
+        (click)="extractNumber()"
+      >
+        🎲 ESTRAI NUMERO
+      </button>
+    </div>
+  </section>
+
+  <section class="board-card">
+    <div class="board-grid">
+      @for (number of boardNumbers; track number) {
+
+      <div
+        class="number-cell"
+        [class.extracted]="isExtracted(number)"
+        [class.latest]="isLastExtracted(number)"
+      >
+        {{ number }}
+      </div>
+
+      }
+    </div>
+  </section>
+</div>

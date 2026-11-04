@@ -27,7 +27,6 @@
 
     <button class="header-action" (click)="leave()">
       <i class="bi bi-box-arrow-right"></i>
-
       Esci
     </button>
   </header>
@@ -99,6 +98,9 @@
           <h3>Giocatori Connessi</h3>
 
           <span class="live-badge"> LIVE </span>
+          <div class="players-counter">
+            n° partecipanti: {{ playerCount() }}
+          </div>
         </div>
 
         <input
@@ -149,8 +151,8 @@
         (click)="startGame()"
       >
         <i class="bi bi-play-circle-fill"></i>
-
-        Avvia Partita
+        @if(playerCount() === 1) { Avvia Partita {{ playerCount() }} giocatore }
+        @else { Avvia Partita {{ playerCount() }} giocatori }
       </button>
     </div>
   </footer>
