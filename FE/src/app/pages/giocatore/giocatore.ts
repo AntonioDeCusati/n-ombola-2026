@@ -9,6 +9,7 @@ import { filter, from, switchMap, take, tap } from 'rxjs';
 import { GameSessionService } from '../../services/game-session.service';
 import { SocketService } from '../../services/socket.service';
 import { WinType } from '../../models/tombola.models';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-giocatore',
@@ -26,6 +27,13 @@ export class Giocatore implements OnInit {
 
   protected playerName = signal('');
   protected roomCode = signal('');
+
+  protected readonly connected = toSignal(
+      this.socket.onConnectionChanged(),
+      {
+        initialValue: false,
+      },
+  );
 
   protected readonly hasJoined = computed(
     () => !!this.cartella(),
@@ -46,14 +54,11 @@ export class Giocatore implements OnInit {
   protected readonly lastExtractedNumber = computed(() => this.extractedNumbers().at(-1) ?? null,);
 
   ngOnInit(): void {
-    console.log('ROOM', this.room());
-    console.log('CARTELLA', this.cartella());
-    console.log('PLAYER', this.session.playerId());
-    console.log('ROLE', this.session.role());
+    // console.log('ROOM', this.room());
+    // console.log('CARTELLA', this.cartella());
+    // console.log('PLAYER', this.session.playerId());
+    // console.log('ROLE', this.session.role());
     this.socket.connect();
-
-
-
     this.listenNumberExtracted();
     this.listenWinConfirmed();
     this.listenWinRejected();

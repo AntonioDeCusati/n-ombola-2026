@@ -12,14 +12,40 @@
 
 .logo-container {
   text-align: center;
-  margin: 100px 0 80px;
+  margin: 32px 0 48px;
+}
+
+.christmas-logo {
+  width: 220px;
+  max-width: 100%;
+  margin-bottom: 16px;
 }
 
 .logo-title {
-  font-size: 3rem;
+  font-size: 3.5rem;
   font-weight: 800;
-  color: #101828;
-  margin: 0;
+  color: #172033;
+
+  margin-bottom: 8px;
+}
+
+.christmas-subtitle {
+  color: #ec008c;
+
+  font-size: 0.95rem;
+  font-weight: 700;
+
+  letter-spacing: 0.05em;
+
+  text-transform: uppercase;
+}
+
+
+.christmas-tagline {
+  width: 220px;
+  max-width: 100%;
+
+  margin-bottom: 40px;
 }
 
 .role-card {
@@ -115,4 +141,16 @@ hr {
   border-radius: 16px;
   font-size: 1.1rem;
   font-weight: 600;
+}
+
+@media (max-width: 576px) {
+
+  .logo-title {
+    font-size: 2.6rem;
+  }
+
+  .christmas-logo {
+    width: 180px;
+  }
+
 }

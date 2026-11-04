@@ -1,17 +1,38 @@
 <div class="join-page">
+  <div class="snow-container">
+
+  @for (snow of [1,2,3,4,5,6,7,8,9,10]; track snow) {
+    <span class="snowflake">❄</span>
+  }
+
+</div>
   <div class="page-header">
     <button class="back-button" (click)="goback()">
       <i class="bi bi-arrow-left"></i>
     </button>
 
     <div class="header-content">
+      <img
+        src="nesea-natalizia.png"
+        alt="Nesea Natale"
+        class="christmas-header-logo"
+      />
       <h1>Entra nella Partita</h1>
-      <div class="subtitle">Tombola Aziendale Festiva</div>
+      <div class="subtitle">🎄 Tombola Natalizia Nesea 2026 🎄</div>
     </div>
 
-    <div class="connection-pill">
-      <i class="bi bi-wifi"></i>
-      CONNESSO
+    <div
+      [class.connection-pill]="connected()"
+      [class.disconnected-pill]="!connected()"
+    >
+      <i
+        class="bi"
+        [class.bi-wifi]="connected()"
+        [class.bi-wifi-off]="!connected()"
+      >
+      </i>
+
+      {{ connected() ? 'CONNESSO' : 'DISCONNESSO' }}
     </div>
   </div>
 
@@ -19,34 +40,41 @@
     <div class="left-column">
       <!-- CODICE STANZA -->
 
-      <div class="join-card">
+      <div class="join-card christmas-card">
         <div class="section-header">
           <span class="section-title"> CODICE STANZA (4 CIFRE) </span>
-
           <span class="section-helper"> Digita sotto </span>
+          <button type="button" class="reset-button" (click)="resetForm()">
+            <i class="bi bi-arrow-counterclockwise"></i>
+            Reset
+          </button>
         </div>
+      </div>
 
-        <div class="code-grid">
-          @for (digit of roomDigits(); track $index) {
+      <div class="code-grid">
+        @for (digit of roomDigits(); track $index) {
 
-          <div
-            class="digit-box"
-            [class.active]="$index === roomCode().length - 1"
-          >
-            {{ digit }}
-          </div>
-
-          }
-        </div>
-
-        @if(roomCode().length === 4) {
-
-        <div class="room-found">
-          ● Stanza {{ roomCode() }} trovata • In attesa del Banco
+        <div
+          class="digit-box"
+          [class.active]="$index === roomCode().length - 1"
+        >
+          {{ digit }}
         </div>
 
         }
       </div>
+
+      @if(roomCode().length === 4 && roomFound()) {
+
+      <div class="room-found">
+        🎁 Stanza {{ roomCode() }} trovata • In attesa del Banco
+      </div>
+
+      } @if(roomCode().length === 4 && !roomFound()) {
+
+      <div class="room-not-found">🎄 Stanza {{ roomCode() }} non trovata</div>
+
+      }
 
       <!-- NOME -->
 
@@ -57,7 +85,6 @@
           class="name-input"
           [value]="playerName()"
           (input)="playerName.set($any($event.target).value)"
-          placeholder="Giulia M."
         />
       </div>
 
@@ -67,7 +94,9 @@
         <i class="bi bi-qr-code"></i>
 
         <div>
-          <div class="info-title">Supporto link diretto & QR Code</div>
+          <div class="info-title">
+            Supporto link diretto & QR Code Natalizio 🎄🎅
+          </div>
 
           <div class="info-subtitle">Inquadra dal tavolo di sala</div>
         </div>
@@ -111,7 +140,7 @@
           [disabled]="roomCode().length !== 4 || joining()"
           (click)="join()"
         >
-          ENTRA IN STANZA
+          🎅 ENTRA IN STANZA
         </button>
       </div>
     </div>

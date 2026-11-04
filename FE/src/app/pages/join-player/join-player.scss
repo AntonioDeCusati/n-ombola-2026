@@ -1,7 +1,82 @@
 :host {
   display: block;
   min-height: 100vh;
-  background: #f6f8fc;
+
+  background:
+    radial-gradient(circle at top right,
+      rgba(236, 0, 140, 0.08),
+      transparent 25%),
+    radial-gradient(circle at bottom left,
+      rgba(255, 255, 255, .9),
+      transparent 25%),
+    #f6f8fc;
+}
+
+.snow-container {
+  position: fixed;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  overflow: hidden;
+
+  z-index: 0;
+}
+
+.snowflake {
+  position: absolute;
+
+  top: -20px;
+
+  color: white;
+
+  opacity: .7;
+
+  animation: snowfall linear infinite;
+}
+
+.snowflake:nth-child(1) {
+  left: 10%;
+  animation-duration: 12s;
+}
+
+.snowflake:nth-child(2) {
+  left: 25%;
+  animation-duration: 15s;
+}
+
+.snowflake:nth-child(3) {
+  left: 40%;
+  animation-duration: 18s;
+}
+
+.snowflake:nth-child(4) {
+  left: 55%;
+  animation-duration: 10s;
+}
+
+.snowflake:nth-child(5) {
+  left: 70%;
+  animation-duration: 14s;
+}
+
+.snowflake:nth-child(6) {
+  left: 85%;
+  animation-duration: 16s;
+}
+
+
+@keyframes snowfall {
+
+  from {
+    transform: translateY(-20px);
+  }
+
+  to {
+    transform: translateY(110vh);
+  }
+
 }
 
 .join-page {
@@ -48,10 +123,25 @@
 }
 
 .subtitle {
-  margin-top: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 
-  color: #7c8aa5;
-  font-size: 1rem;
+  margin-top: 12px;
+
+  padding: 8px 16px;
+
+  border-radius: 999px;
+
+  background: linear-gradient(135deg,
+      #fff5fa,
+      #fff0f6);
+
+  border: 1px solid #ffd3ea;
+
+  color: #ec008c;
+
+  font-weight: 700;
 }
 
 .back-button {
@@ -72,23 +162,35 @@
 
 .connection-pill {
   margin-left: auto;
-
   height: 50px;
-
   padding: 0 20px;
-
   display: flex;
   align-items: center;
   gap: 10px;
-
   border-radius: 999px;
-
   background: white;
   border: 2px solid #98ebbb;
-
   color: #059669;
-
   font-weight: 700;
+}
+
+.disconnected-pill {
+  margin-left: auto;
+  height: 50px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 999px;
+  background: white;
+  border: 2px solid #ef4444;
+  color: #960505;
+  font-weight: 700;
+}
+
+.christmas-header-logo {
+  width: 180px;
+  // margin-bottom: 8px;
 }
 
 /* -------------------------------- */
@@ -126,6 +228,16 @@
   padding: 24px;
 
   box-shadow: 0 2px 8px rgb(15 23 42 / 4%);
+}
+
+
+.christmas-card {
+  background:
+    linear-gradient(135deg,
+      #fff,
+      #fff9fc);
+
+  border-color: #ffd3ea;
 }
 
 /* -------------------------------- */
@@ -183,7 +295,11 @@
 .digit-box.active {
   border-color: #ec008c;
 
-  box-shadow: 0 0 0 4px rgb(236 0 140 / 12%);
+  background: #fff5fa;
+
+  box-shadow:
+    0 0 0 4px rgb(236 0 140 / 10%),
+    0 0 20px rgb(236 0 140 / 15%);
 }
 
 .room-found {
@@ -309,11 +425,9 @@
   border: none;
   border-radius: 20px;
 
-  background: linear-gradient(
-    180deg,
-    #ff199f,
-    #ec008c
-  );
+  background: linear-gradient(180deg,
+      #ff199f,
+      #ec008c);
 
   color: white;
 
@@ -329,6 +443,46 @@
   opacity: .6;
 }
 
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  margin-bottom: 12px;
+}
+
+.reset-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  border: none;
+  background: transparent;
+
+  color: black;
+
+  font-size: .9rem;
+  font-weight: 600;
+}
+
+.reset-button:hover {
+  color: #ec008c;
+}
+
+.room-not-found {
+  margin-top: 20px;
+
+  padding: 16px 20px;
+
+  border-radius: 16px;
+
+  background: #fef2f2;
+  border: 2px solid #fecaca;
+
+  color: #dc2626;
+
+  font-weight: 600;
+}
+
 /* -------------------------------- */
 /* DESKTOP */
 /* -------------------------------- */
@@ -339,8 +493,7 @@
     display: grid;
 
     grid-template-columns:
-      minmax(0, 1fr)
-      420px;
+      minmax(0, 1fr) 420px;
 
     gap: 32px;
 

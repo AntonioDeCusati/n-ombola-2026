@@ -279,3 +279,31 @@
 .tombola {
   grid-column: span 2;
 }
+
+.connection-pill {
+  margin-left: auto;
+  height: 50px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 999px;
+  background: white;
+  border: 2px solid #98ebbb;
+  color: #059669;
+  font-weight: 700;
+}
+
+.disconnected-pill {
+  margin-left: auto;
+  height: 50px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 999px;
+  background: white;
+  border: 2px solid #ef4444;
+  color: #960505;
+  font-weight: 700;
+}

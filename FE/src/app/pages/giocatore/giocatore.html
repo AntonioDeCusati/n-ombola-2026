@@ -1,13 +1,20 @@
-<!-- <h1>Giocatore</h1>
-<p>Da implementare. Usa <code>SocketService</code> e <code>GameSessionService</code> — vedi <code>FE/README.md</code>.</p>
-<a routerLink="/">← Home</a> -->
+
 <div class="player-container">
   <!-- HEADER -->
 
   <div class="player-header">
-    <div class="status-pill connected">
-      <span class="dot"></span>
-      CONNESSO
+    <div
+      [class.connection-pill]="connected()"
+      [class.disconnected-pill]="!connected()">
+
+      <i
+        class="bi"
+        [class.bi-wifi]="connected()"
+        [class.bi-wifi-off]="!connected()">
+      </i>
+
+      {{ connected() ? 'CONNESSO' : 'DISCONNESSO' }}
+
     </div>
 
     <div class="room-pill">#{{ room()?.id }}</div>

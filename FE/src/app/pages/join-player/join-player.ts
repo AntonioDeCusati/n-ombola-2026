@@ -2,12 +2,14 @@ import {
   Component,
   computed,
   inject,
+  OnInit,
   signal,
 } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { toSignal } from '@angular/core/rxjs-interop';
 import { GameSessionService } from '../../services/game-session.service';
 import { SocketService } from '../../services/socket.service';
+import { from, tap } from 'rxjs';
 
 @Component({
   selector: 'app-join-player',
@@ -15,22 +17,27 @@ import { SocketService } from '../../services/socket.service';
   templateUrl: './join-player.html',
   styleUrl: './join-player.scss',
 })
-export class JoinPlayer{
+export class JoinPlayer implements OnInit{
+
   private readonly socket = inject(SocketService);
   private readonly session = inject(GameSessionService);
   private readonly router = inject(Router);
 
+  protected readonly connected = toSignal(
+    this.socket.onConnectionChanged(),
+    {
+      initialValue: false,
+    },
+  );
+
   protected readonly roomCode = signal('');
   protected readonly playerName = signal('');
-
   protected readonly joining = signal(false);
   protected readonly roomFound = signal(false);
-
   protected readonly isConnected = signal(true);
 
   protected readonly roomDigits = computed(() => {
     const code = this.roomCode();
-
     return [
       code[0] ?? '',
       code[1] ?? '',
@@ -39,12 +46,8 @@ export class JoinPlayer{
     ];
   });
 
-  protected appendDigit(value: string): void {
-    if (this.roomCode().length >= 4) {
-      return;
-    }
-
-    this.roomCode.update(code => code + value);
+  ngOnInit(): void {
+    this.socket.connect()
   }
 
   protected clearCode(): void {
@@ -90,6 +93,33 @@ export class JoinPlayer{
 
   protected goback(): void {
     this.router.navigate(['/']);
+  }
 
+  protected resetForm(): void {
+    this.roomCode.set('');
+    this.playerName.set('');
+    this.roomFound.set(false);
+  }
+
+  protected appendDigit(value: string): void {
+    if (this.roomCode().length >= 4) {
+      return;
+    }
+
+    this.roomCode.update(code => code + value);
+
+    if (this.roomCode().length === 4) {
+      this.checkRoom();
+    }
+  }
+
+  private checkRoom(): void {
+    from(
+      this.socket.getRoomState(this.roomCode()),
+    ).pipe(
+      tap((response) => {
+        this.roomFound.set(response.success);
+      }),
+    ).subscribe();
   }
 }
