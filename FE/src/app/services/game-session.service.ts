@@ -10,6 +10,7 @@ interface StoredSession {
   roomId: string | null;
   playerId: string | null;
   playerName: string | null;
+  cartella: Cartella | null;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -88,6 +89,7 @@ export class GameSessionService {
     this.role.set(stored.role);
     this.playerId.set(stored.playerId);
     this.playerName.set(stored.playerName);
+    this.cartella.set(stored.cartella);
   }
 
   private persist(): void {
@@ -96,6 +98,7 @@ export class GameSessionService {
       roomId: this.room()?.id ?? null,
       playerId: this.playerId(),
       playerName: this.playerName(),
+      cartella: this.cartella(),
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   }

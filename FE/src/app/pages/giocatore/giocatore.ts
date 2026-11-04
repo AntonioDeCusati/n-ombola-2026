@@ -1,16 +1,14 @@
-import {
-  Component,
-  OnInit,
-  computed,
-  inject,
-  signal,
-} from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { filter, from, switchMap, take, tap } from 'rxjs';
 import { GameSessionService } from '../../services/game-session.service';
 import { SocketService } from '../../services/socket.service';
 import { WinType } from '../../models/tombola.models';
 import { toSignal } from '@angular/core/rxjs-interop';
 
+
+//TODO: Implementare metodi per disabilitiare i pulsanti di quaterna cinquina e tombola in base alle condizioni di vincita
+//TODO: implementare la logica per rimanere sempre in ascolto dei numeri che vengono lanciati
+//TODO: imlementare la logica per la visualizzazione della verifca della vincita e la conferma o meno da parte del banco
 @Component({
   selector: 'app-giocatore',
   standalone: true,
@@ -28,16 +26,11 @@ export class Giocatore implements OnInit {
   protected playerName = signal('');
   protected roomCode = signal('');
 
-  protected readonly connected = toSignal(
-      this.socket.onConnectionChanged(),
-      {
-        initialValue: false,
-      },
-  );
+  protected readonly connected = toSignal(this.socket.onConnectionChanged(), {
+    initialValue: this.socket.isConnected(),
+  });
 
-  protected readonly hasJoined = computed(
-    () => !!this.cartella(),
-  );
+  protected readonly hasJoined = computed(() => !!this.cartella());
 
   protected readonly markedCount = computed(() => {
     const cartella = this.cartella();
@@ -51,14 +44,26 @@ export class Giocatore implements OnInit {
     ).length;
   });
 
-  protected readonly lastExtractedNumber = computed(() => this.extractedNumbers().at(-1) ?? null,);
+  protected readonly lastExtractedNumber = computed(
+    () => this.extractedNumbers().at(-1) ?? null,
+  );
 
   ngOnInit(): void {
-    // console.log('ROOM', this.room());
-    // console.log('CARTELLA', this.cartella());
-    // console.log('PLAYER', this.session.playerId());
-    // console.log('ROLE', this.session.role());
     this.socket.connect();
+
+    const stored = this.session.getStoredSession();
+
+    if (stored?.roomId) {
+      from(this.socket.getRoomState(stored.roomId))
+        .pipe(
+          filter((response) => response.success && !!response.room),
+          tap((response) => {
+            this.session.updateRoom(response.room!);
+          }),
+        )
+        .subscribe();
+    }
+
     this.listenNumberExtracted();
     this.listenWinConfirmed();
     this.listenWinRejected();
@@ -66,12 +71,7 @@ export class Giocatore implements OnInit {
   }
 
   protected join(): void {
-    from(
-      this.socket.joinRoom(
-        this.roomCode(),
-        this.playerName(),
-      ),
-    )
+    from(this.socket.joinRoom(this.roomCode(), this.playerName()))
       .pipe(
         filter((response) => response.success),
         tap((response) => {
@@ -90,40 +90,91 @@ export class Giocatore implements OnInit {
     return this.session.canClaimWinType(winType);
   }
 
+  protected claimWin(winType: WinType): void {
+    const roomId = this.session.roomId();
+    const playerId = this.session.playerId();
+
+    if (!roomId || !playerId) {
+      return;
+    }
+
+    from(this.socket.claimWin(roomId, playerId, winType)).subscribe();
+  }
+
   protected isMarked(value: number | null): boolean {
     return value !== null && this.session.isNumberExtracted(value);
   }
 
+  protected hasAmbo(): boolean {
+    const card = this.cartella();
+
+    if (!card) {
+      return false;
+    }
+
+    return card.grid.some(
+      (row) =>
+        row.filter((n) => n !== null && this.session.isNumberExtracted(n))
+          .length >= 2,
+    );
+  }
+
+  protected hasTerna(): boolean {
+    const card = this.cartella();
+
+    if (!card) {
+      return false;
+    }
+
+    return card.grid.some(
+      (row) =>
+        row.filter((n) => n !== null && this.session.isNumberExtracted(n))
+          .length >= 3,
+    );
+  }
+
   private listenNumberExtracted(): void {
-    this.socket.onNumberExtracted().pipe(
-      filter(() => !!this.session.roomId()),
-      switchMap(() => this.socket.getRoomState(this.session.roomId()!)),
-      filter((response) => response.success && !!response.room),
-      // take(1),
-      tap((response) => {
-        this.session.updateRoom(response.room!);
-      }),
-    ).subscribe();
+    this.socket
+      .onNumberExtracted()
+      .pipe(
+        filter(() => !!this.session.roomId()),
+        switchMap(() => this.socket.getRoomState(this.session.roomId()!)),
+        filter((response) => response.success && !!response.room),
+        // take(1),
+        tap((response) => {
+          this.session.updateRoom(response.room!);
+        }),
+      )
+      .subscribe();
   }
 
   private listenWinConfirmed(): void {
-    this.socket.onWinConfirmed().pipe(
-    take(1),
-      tap(({ room }) => this.session.updateRoom(room))
-    ).subscribe();
+    this.socket
+      .onWinConfirmed()
+      .pipe(
+        take(1),
+        tap(({ room }) => this.session.updateRoom(room)),
+      )
+      .subscribe();
   }
 
   private listenWinRejected(): void {
-    this.socket.onWinRejected().pipe(
-      take(1),
-      tap(({ room }) => this.session.updateRoom(room))
-    ).subscribe();
+    this.socket
+      .onWinRejected()
+      .pipe(
+        take(1),
+        tap(({ room }) => this.session.updateRoom(room)),
+      )
+      .subscribe();
   }
 
   private listenGameFinished(): void {
-    this.socket.onGameFinished().pipe(
-      take(1),
-      tap(({ room }) => this.session.updateRoom(room))
-    ).subscribe();
+    this.socket
+      .onGameFinished()
+      .pipe(
+        take(1),
+        tap(({ room }) => this.session.updateRoom(room)),
+      )
+      .subscribe();
   }
 }

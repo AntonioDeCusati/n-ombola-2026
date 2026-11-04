@@ -1,70 +1,207 @@
 :host {
   display: block;
   min-height: 100vh;
-  background-color: #f5f7fa;
+
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(236, 0, 140, .08),
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at bottom left,
+      rgba(255, 255, 255, .9),
+      transparent 20%
+    ),
+    #f6f8fc;
 }
 
 .player-container {
-  max-width: 540px;
+  max-width: 650px;
   margin: 0 auto;
-  padding: 16px;
+  padding: 20px;
 }
 
+/* ============================================= */
 /* HEADER */
+/* ============================================= */
+
+.christmas-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  margin-bottom: 24px;
+}
+
+.christmas-logo {
+  width: 90px;
+  height: auto;
+}
+
+.header-content {
+  flex: 1;
+}
+
+.event-badge {
+  display: inline-flex;
+
+  padding: 8px 16px;
+
+  border-radius: 999px;
+
+  background: #fff5fa;
+
+  border: 1px solid #ffd8ec;
+
+  color: #ec008c;
+
+  font-size: .85rem;
+  font-weight: 700;
+}
+
+.header-content h2 {
+  margin: 8px 0 2px;
+
+  font-size: 2rem;
+  font-weight: 800;
+  color: #172033;
+}
+
+.header-content span {
+  color: #667085;
+}
+
+/* ============================================= */
+/* HERO NUMBER */
+/* ============================================= */
+
+.hero-number-card {
+  margin-bottom: 24px;
+
+  text-align: center;
+
+  padding: 28px;
+
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff,
+      #fff5fa
+    );
+
+  border: 2px solid #ffd8ec;
+
+  box-shadow:
+    0 10px 25px rgba(
+      236,
+      0,
+      140,
+      .08
+    );
+}
+
+.hero-label {
+  color: #667085;
+
+  font-size: .9rem;
+
+  font-weight: 700;
+
+  letter-spacing: .08em;
+}
+
+.hero-number {
+
+  font-size: 7rem;
+
+  line-height: 1;
+
+  font-weight: 900;
+
+  color: #ec008c;
+
+  text-shadow:
+    0 0 14px rgba(
+      236,
+      0,
+      140,
+      .2
+    );
+}
+
+/* ============================================= */
+/* STATUS BAR */
+/* ============================================= */
 
 .player-header {
   display: flex;
   gap: 12px;
   align-items: center;
-  margin-bottom: 20px;
+
+  margin-bottom: 24px;
 }
 
-.status-pill,
-.room-pill {
-  height: 42px;
+.connection-pill,
+.disconnected-pill {
+  height: 48px;
+
+  padding: 0 18px;
 
   display: flex;
   align-items: center;
-  padding: 0 16px;
+  gap: 8px;
 
-  border-radius: 24px;
-  font-weight: 600;
+  border-radius: 999px;
+
+  font-weight: 700;
+
+  background: white;
 }
 
-.connected {
-  color: #18a96b;
-  background: #eafbf3;
-  border: 1px solid #b8ebd2;
+.connection-pill {
+  border: 2px solid #98ebbb;
+  color: #059669;
 }
 
-.dot {
-  width: 8px;
-  height: 8px;
-
-  border-radius: 50%;
-  background: #18a96b;
-
-  margin-right: 8px;
+.disconnected-pill {
+  border: 2px solid #ef4444;
+  color: #b91c1c;
 }
 
 .room-pill {
+  height: 48px;
+
+  padding: 0 18px;
+
+  display: flex;
+  align-items: center;
+
+  border-radius: 999px;
+
   background: white;
+
   border: 1px solid #dfe5ed;
+
+  font-weight: 700;
 }
 
 .last-extracted-card {
   flex: 1;
 
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 
   background: white;
 
-  border-radius: 24px;
   border: 1px solid #dfe5ed;
 
-  padding: 10px 16px;
+  border-radius: 24px;
+
+  padding: 12px 18px;
 }
 
 .last-extracted-info {
@@ -74,36 +211,59 @@
 
 .last-extracted-info small {
   color: #98a2b3;
-  font-size: 11px;
+}
+
+.last-extracted-info strong {
+  font-size: 1.5rem;
+
+  color: #ec008c;
 }
 
 .number-circle {
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  height: 56px;
 
   border-radius: 50%;
-  background: #ec008c;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff2ea5,
+      #ec008c
+    );
 
   color: white;
-  font-weight: 700;
+
+  font-size: 1.2rem;
+  font-weight: 800;
 
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+/* ============================================= */
 /* CARD */
+/* ============================================= */
 
 .content-card {
   background: white;
 
   border: 1px solid #e4e7ec;
 
-  border-radius: 24px;
+  border-radius: 28px;
 
-  padding: 20px;
+  padding: 24px;
 
   margin-bottom: 20px;
+
+  box-shadow:
+    0 8px 18px rgba(
+      15,
+      23,
+      42,
+      .04
+    );
 }
 
 .card-header-section {
@@ -111,98 +271,124 @@
   justify-content: space-between;
   align-items: center;
 
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .title-wrapper {
   display: flex;
-  gap: 12px;
   align-items: center;
+  gap: 14px;
 }
 
 .icon-box {
-  width: 42px;
-  height: 42px;
+  width: 48px;
+  height: 48px;
 
-  border-radius: 12px;
+  border-radius: 14px;
 
   background: #fff0f8;
 
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 
   color: #ec008c;
 }
 
 .card-title {
-  font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
+  font-weight: 800;
 }
 
 .card-subtitle {
   color: #667085;
-  font-size: 0.875rem;
 }
 
 .marked-pill {
-  border-radius: 20px;
+  padding: 8px 14px;
 
-  border: 1px solid #f2b8db;
+  border-radius: 999px;
+
+  border: 1px solid #ffd8ec;
 
   color: #ec008c;
 
-  padding: 6px 14px;
-
-  font-size: 0.9rem;
+  font-weight: 700;
 }
 
-/* GRID */
+/* ============================================= */
+/* BINGO GRID */
+/* ============================================= */
 
 .bingo-grid {
   display: grid;
-  grid-template-columns: repeat(9, 1fr);
+
+  grid-template-columns:
+    repeat(9, 1fr);
+
   gap: 8px;
 }
 
 .grid-cell {
   aspect-ratio: 1;
 
+  border-radius: 16px;
+
   border: 1px solid #dde3eb;
 
-  border-radius: 12px;
+  background: white;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
+  font-weight: 800;
 
-  background: white;
+  transition: .2s;
 }
 
 .grid-cell.marked {
-  background: #ec008c;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff2ea5,
+      #ec008c
+    );
+
   border-color: #ec008c;
+
   color: white;
+
+  box-shadow:
+    0 6px 16px rgba(
+      236,
+      0,
+      140,
+      .25
+    );
 }
 
 .grid-cell.empty {
+  background: #f9fafb;
+
   border-style: dashed;
+
   color: transparent;
 }
 
+/* ============================================= */
 /* LEGEND */
+/* ============================================= */
 
 .legend {
-  margin-top: 18px;
+  margin-top: 20px;
 
   display: flex;
   justify-content: space-between;
 
   color: #667085;
-  font-size: .9rem;
 }
 
 .legend-dot {
@@ -212,7 +398,8 @@
   height: 10px;
 
   border-radius: 50%;
-  margin-right: 8px;
+
+  margin-right: 6px;
 }
 
 .extracted {
@@ -223,7 +410,9 @@
   border: 1px solid #cdd5df;
 }
 
+/* ============================================= */
 /* CLAIM */
+/* ============================================= */
 
 .claim-header {
   display: flex;
@@ -234,42 +423,53 @@
 }
 
 .claim-available {
-  background: #eafbf3;
+  padding: 6px 14px;
 
-  color: #18a96b;
+  border-radius: 999px;
 
-  border-radius: 16px;
+  background: #ecfdf3;
 
-  padding: 4px 14px;
+  color: #059669;
 
-  font-size: .875rem;
-
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .claim-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+
+  grid-template-columns:
+    repeat(2, 1fr);
+
   gap: 12px;
 }
 
 .claim-btn {
-  height: 60px;
+
+  height: 70px;
+
+  border-radius: 18px;
 
   border: 1px solid #dbe1e8;
 
   background: white;
 
-  border-radius: 16px;
-
-  font-weight: 600;
+  font-weight: 700;
 
   transition: .2s;
 }
 
 .claim-btn:hover:not(:disabled) {
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff2ea5,
+      #ec008c
+    );
+
   border-color: #ec008c;
-  color: #ec008c;
+
+  color: white;
 }
 
 .claim-btn:disabled {
@@ -280,30 +480,30 @@
   grid-column: span 2;
 }
 
-.connection-pill {
-  margin-left: auto;
-  height: 50px;
-  padding: 0 20px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border-radius: 999px;
-  background: white;
-  border: 2px solid #98ebbb;
-  color: #059669;
-  font-weight: 700;
-}
+/* ============================================= */
+/* MOBILE */
+/* ============================================= */
 
-.disconnected-pill {
-  margin-left: auto;
-  height: 50px;
-  padding: 0 20px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border-radius: 999px;
-  background: white;
-  border: 2px solid #ef4444;
-  color: #960505;
-  font-weight: 700;
+@media (max-width: 768px) {
+
+  .player-container {
+    padding: 14px;
+  }
+
+  .hero-number {
+    font-size: 5rem;
+  }
+
+  .player-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .claim-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tombola {
+    grid-column: span 1;
+  }
 }

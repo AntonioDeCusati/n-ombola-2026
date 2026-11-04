@@ -1,38 +1,55 @@
-
 <div class="player-container">
   <!-- HEADER -->
+
+  <div class="christmas-header">
+    <img src="nesea-natalizia.png" class="christmas-logo" alt="Nesea Natale" />
+
+    <div class="header-content">
+      <div class="event-badge">TOMBOLA NATALIZIA 2026</div>
+
+      <h2>Cartella #{{ cartella()?.id }}</h2>
+
+      <span> Sala {{ room()?.id }} </span>
+    </div>
+  </div>
+
+  <!-- ULTIMO NUMERO -->
+
+  <div class="hero-number-card">
+    <div class="hero-label">ULTIMO NUMERO ESTRATTO</div>
+
+    <div class="hero-number">{{ extractedNumbers().at(-1) ?? '--' }}</div>
+
+    <div class="hero-subtitle">
+      Numeri Marcati
+
+      <strong> {{ markedCount() }}/15 </strong>
+    </div>
+  </div>
+
+  <!-- STATUS -->
 
   <div class="player-header">
     <div
       [class.connection-pill]="connected()"
-      [class.disconnected-pill]="!connected()">
-
+      [class.disconnected-pill]="!connected()"
+    >
       <i
         class="bi"
         [class.bi-wifi]="connected()"
-        [class.bi-wifi-off]="!connected()">
+        [class.bi-wifi-off]="!connected()"
+      >
       </i>
 
       {{ connected() ? 'CONNESSO' : 'DISCONNESSO' }}
-
     </div>
 
-    <div class="room-pill">#{{ room()?.id }}</div>
-
-    <div class="last-extracted-card">
-      <div class="last-extracted-info">
-        <small>ULTIMO ESTRATTO</small>
-
-        <strong> {{ extractedNumbers().at(-1) ?? '-' }} </strong>
-      </div>
-
-      <div class="number-circle">{{ extractedNumbers().at(-1) ?? '-' }}</div>
-    </div>
+    <div class="room-pill">STANZA {{ room()?.id }}</div>
   </div>
 
-  <!-- CARTELLA -->
-
   @if (cartella(); as card) {
+
+  <!-- CARTELLA -->
 
   <div class="content-card">
     <div class="card-header-section">
@@ -48,13 +65,8 @@
         </div>
       </div>
 
-      <div class="marked-pill">
-        Marcati:
-        <strong>{{ markedCount() }}/15</strong>
-      </div>
+      <div class="marked-pill">🎯 {{ markedCount() }}/15</div>
     </div>
-
-    <!-- GRID -->
 
     <div class="bingo-grid">
       @for (row of card.grid; track $index) { @for (cell of row; track $index) {
@@ -73,12 +85,14 @@
     <div class="legend">
       <div>
         <span class="legend-dot extracted"></span>
-        Estratto / Segnato
+
+        Estratto
       </div>
 
       <div>
         <span class="legend-dot waiting"></span>
-        In attesa
+
+        Non estratto
       </div>
     </div>
   </div>
@@ -89,48 +103,57 @@
     <div class="claim-header">
       <h5 class="mb-0">RECLAMA VINCITA</h5>
 
-      <span class="claim-available"> Vincita disponibile </span>
+      <span class="claim-available"> Disponibile </span>
+    </div>
+
+    <div class="claim-description">
+      Se hai completato una combinazione puoi chiamare il Banco.
     </div>
 
     <div class="claim-grid">
       <button
         type="button"
         class="claim-btn"
-        [disabled]="!canClaimWinType('ambo')"
+        [disabled]="!hasAmbo()"
+        (click)="claimWin('ambo')"
       >
-        1. Ambo
+        🥈 Ambo
       </button>
 
       <button
         type="button"
         class="claim-btn"
-        [disabled]="!canClaimWinType('terna')"
+        [disabled]="!hasTerna()"
+        (click)="claimWin('terna')"
       >
-        2. Terna
+        🔺 Terna
       </button>
 
       <button
         type="button"
         class="claim-btn"
         [disabled]="!canClaimWinType('quaterna')"
+        (click)="claimWin('quaterna')"
       >
-        3. Quaterna
+        ⭐ Quaterna
       </button>
 
       <button
         type="button"
         class="claim-btn"
         [disabled]="!canClaimWinType('cinquina')"
+        (click)="claimWin('cinquina')"
       >
-        4. Cinquina
+        🎁 Cinquina
       </button>
 
       <button
         type="button"
         class="claim-btn tombola"
         [disabled]="!canClaimWinType('tombola')"
+        (click)="claimWin('tombola')"
       >
-        5. Tombola
+        🏆 TOMBOLA
       </button>
     </div>
   </div>
