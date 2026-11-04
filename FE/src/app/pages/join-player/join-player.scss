@@ -66,6 +66,35 @@
   animation-duration: 16s;
 }
 
+.snowflake:nth-child(7) {
+  left: 35%;
+  animation-duration: 11s;
+}
+
+.snowflake:nth-child(8) {
+  left: 45%;
+  animation-duration: 18s;
+}
+
+.snowflake:nth-child(9) {
+  left: 50%;
+  animation-duration: 13s;
+}
+
+.snowflake:nth-child(10) {
+  left: 60%;
+  animation-duration: 16s;
+}
+
+.snowflake:nth-child(11) {
+  left: 65%;
+  animation-duration: 15s;
+}
+
+.snowflake:nth-child(12) {
+  left: 75%;
+  animation-duration: 12s;
+}
 
 @keyframes snowfall {
 
@@ -482,6 +511,7 @@
 
   font-weight: 600;
 }
+
 
 /* -------------------------------- */
 /* DESKTOP */

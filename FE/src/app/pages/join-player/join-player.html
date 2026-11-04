@@ -1,7 +1,7 @@
 <div class="join-page">
   <div class="snow-container">
 
-  @for (snow of [1,2,3,4,5,6,7,8,9,10]; track snow) {
+  @for (snow of snowflakes(); track $index) {
     <span class="snowflake">❄</span>
   }
 
@@ -25,6 +25,7 @@
       [class.connection-pill]="connected()"
       [class.disconnected-pill]="!connected()"
     >
+
       <i
         class="bi"
         [class.bi-wifi]="connected()"
@@ -44,10 +45,6 @@
         <div class="section-header">
           <span class="section-title"> CODICE STANZA (4 CIFRE) </span>
           <span class="section-helper"> Digita sotto </span>
-          <button type="button" class="reset-button" (click)="resetForm()">
-            <i class="bi bi-arrow-counterclockwise"></i>
-            Reset
-          </button>
         </div>
       </div>
 
@@ -64,13 +61,13 @@
         }
       </div>
 
-      @if(roomCode().length === 4 && roomFound()) {
+      @if(roomCode().length === 4 && roomFound() && !errorMessage()) {
 
       <div class="room-found">
         🎁 Stanza {{ roomCode() }} trovata • In attesa del Banco
       </div>
 
-      } @if(roomCode().length === 4 && !roomFound()) {
+      } @if(roomCode().length === 4 && !roomFound() && errorMessage()) {
 
       <div class="room-not-found">🎄 Stanza {{ roomCode() }} non trovata</div>
 
@@ -79,7 +76,13 @@
       <!-- NOME -->
 
       <div class="join-card">
-        <div class="name-label">IL TUO NOME O NICKNAME</div>
+         <div class="section-header">
+          <span class="name-label">IL TUO NOME O NICKNAME</span>
+          <button type="button" class="reset-button" (click)="resetName()">
+            <i class="bi bi-arrow-counterclockwise"></i>
+            Reset 
+          </button>
+         </div>
 
         <input
           class="name-input"
@@ -137,7 +140,7 @@
 
         <button
           class="join-button"
-          [disabled]="roomCode().length !== 4 || joining()"
+          [disabled]="roomCode().length !== 4 || joining() || !playerName()"
           (click)="join()"
         >
           🎅 ENTRA IN STANZA

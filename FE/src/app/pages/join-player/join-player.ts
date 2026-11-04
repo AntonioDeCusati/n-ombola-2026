@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { GameSessionService } from '../../services/game-session.service';
 import { SocketService } from '../../services/socket.service';
-import { from, tap } from 'rxjs';
+import { filter, finalize, from, tap } from 'rxjs';
 
 @Component({
   selector: 'app-join-player',
@@ -23,10 +23,13 @@ export class JoinPlayer implements OnInit{
   private readonly session = inject(GameSessionService);
   private readonly router = inject(Router);
 
+  protected readonly snowflakes = signal(Array.from({ length: 12 }));
+  protected readonly errorMessage = signal<string | null>(null);
+
   protected readonly connected = toSignal(
     this.socket.onConnectionChanged(),
     {
-      initialValue: false,
+      initialValue: this.socket.isConnected(),
     },
   );
 
@@ -59,46 +62,51 @@ export class JoinPlayer implements OnInit{
     this.roomCode.update(code => code.slice(0, -1));
   }
 
-  protected async join(): Promise<void> {
-    if (this.roomCode().length !== 4) {
+  protected join(): void {
+
+    if ( this.roomCode().length !== 4 || !this.playerName().trim()) {
       return;
     }
 
+    this.errorMessage.set(null);
     this.joining.set(true);
 
-    try {
-      const response = await this.socket.joinRoom(
+    from(
+      this.socket.joinRoom(
         this.roomCode(),
-        this.playerName() || 'Guest',
-      );
+        this.playerName(),
+      ),
+    ).pipe(
+      tap((response) => {
+        if (!response.success) {
+          this.errorMessage.set(
+            response.message ??
+            'Errore durante l\'accesso alla stanza.'
+          );
+          return;
+        }
 
-      if (!response.success) {
-        alert(response.message);
-        return;
-      }
+        this.session.setPlayerSession(
+          response.room!,
+          response.cartella!,
+          response.playerId!,
+          this.playerName(),
+        );
 
-      this.session.setPlayerSession(
-        response.room!,
-        response.cartella!,
-        response.playerId!,
-        this.playerName() || 'Guest',
-      );
-
-      await this.router.navigate(['/giocatore']);
-
-    } finally {
-      this.joining.set(false);
-    }
+       this.router.navigate(['/giocatore']);
+      }),
+      finalize(() => {
+        this.joining.set(false);
+      }),
+    ).subscribe();
   }
 
   protected goback(): void {
     this.router.navigate(['/']);
   }
 
-  protected resetForm(): void {
-    this.roomCode.set('');
+  protected resetName(): void {
     this.playerName.set('');
-    this.roomFound.set(false);
   }
 
   protected appendDigit(value: string): void {
