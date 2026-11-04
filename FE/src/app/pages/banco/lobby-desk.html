@@ -1,0 +1,157 @@
+<div class="bank-page">
+  <header class="bank-header">
+    <div class="brand-section">
+      <img src="nesea-natalizia.png" alt="Nesea Natale" class="header-logo" />
+
+      <div>
+        <h2>Tombola Aziendale</h2>
+
+        <span>Console Gestione Banco</span>
+      </div>
+    </div>
+
+    <div class="header-badges">
+      <div class="room-pill">
+        SALA:
+        <strong>{{ room()?.id }}</strong>
+      </div>
+
+      <div class="waiting-pill">⏳ In attesa giocatori</div>
+    </div>
+
+    <div class="server-pill" [class.offline]="!connected()">
+      <span class="server-dot"></span>
+
+      {{ connected() ? 'Server Online' : 'Server Offline' }}
+    </div>
+
+    <button class="header-action" (click)="leave()">
+      <i class="bi bi-box-arrow-right"></i>
+
+      Esci
+    </button>
+  </header>
+
+  <!-- HERO -->
+
+  <section class="hero-section">
+    <div>
+      <span class="hero-tag"> TOMBOLA NATALIZIA NESEA 2026 </span>
+
+      <h1>Accesso Partecipanti alla Partita</h1>
+
+      <p>
+        Invita i colleghi a scannerizzare il QR Code oppure ad inserire il
+        codice di accesso dal proprio smartphone.
+      </p>
+    </div>
+  </section>
+
+  <!-- CONTENT -->
+
+  <div class="content-grid">
+    <!-- LEFT -->
+
+    <section class="left-content">
+      <div class="bank-card room-card">
+        <div class="card-header">
+          <span> CODICE STANZA ACCESSO </span>
+
+          <span class="state-pill"> ● Stanza Aperta </span>
+        </div>
+
+        <div class="room-code">{{ room()?.id }}</div>
+
+        <div class="room-description">
+          Inserisci il codice dal tuo smartphone
+        </div>
+      </div>
+
+      <div class="bank-card">
+        <div class="qr-section">
+          <div class="qr-wrapper">
+            <i class="bi bi-qr-code"></i>
+          </div>
+
+          <div class="qr-content">
+            <div class="qr-badge">ACCESSO AUTOMATICO RAPIDO</div>
+
+            <h3>Inquadra con la fotocamera</h3>
+
+            <p>
+              La cartella si aprirà immediatamente nel browser dello smartphone
+              senza installare alcuna applicazione.
+            </p>
+
+            <div class="tip-box">
+              💡 Consiglio: usa la modalità orizzontale.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT -->
+
+    <section class="right-content">
+      <div class="bank-card players-card">
+        <div class="players-header">
+          <h3>Giocatori Connessi</h3>
+
+          <span class="live-badge"> LIVE </span>
+        </div>
+
+        <input
+          class="search-input"
+          placeholder="Cerca giocatore..."
+          [value]="search()"
+          (input)="search.set($any($event.target).value)"
+        />
+
+        @for ( player of filteredPlayers(); track player.id ) {
+
+        <div class="player-card">
+          <div class="avatar">{{ initials(player.name) }}</div>
+
+          <div class="player-data">
+            <strong> {{ player.name }} </strong>
+
+            <span> Cartella #{{ player.cartellaId }} </span>
+          </div>
+
+          <span class="ready-badge"> PRONTO </span>
+        </div>
+        } @if(playerCount() === 0) {
+
+        <div class="empty-state">Nessun giocatore collegato</div>
+        }
+      </div>
+    </section>
+  </div>
+
+  <!-- FOOTER -->
+
+  <footer class="footer-panel">
+    <div>
+      <h4>Banco pronto per l'estrazione</h4>
+
+      <p>Il tabellone verrà mostrato a tutti i giocatori collegati.</p>
+    </div>
+
+    <div class="footer-actions">
+      <button class="close-room-btn" (click)="closeRoom()">
+        Chiudi Stanza
+      </button>
+
+      <button
+        class="start-game-btn"
+        [disabled]="playerCount() === 0"
+        (click)="startGame()"
+      >
+        <i class="bi bi-play-circle-fill"></i>
+
+        Avvia Partita
+      </button>
+    </div>
+  </footer>
+</div>
