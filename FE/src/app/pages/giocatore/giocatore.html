@@ -132,7 +132,7 @@
       <button
         type="button"
         class="claim-btn"
-        [disabled]="!canClaimWinType('quaterna')"
+        [disabled]="!hasQuaterna()"
         (click)="claimWin('quaterna')"
       >
         ⭐ Quaterna
@@ -141,7 +141,7 @@
       <button
         type="button"
         class="claim-btn"
-        [disabled]="!canClaimWinType('cinquina')"
+        [disabled]="!hasCinquina()"
         (click)="claimWin('cinquina')"
       >
         🎁 Cinquina
@@ -150,13 +150,21 @@
       <button
         type="button"
         class="claim-btn tombola"
-        [disabled]="!canClaimWinType('tombola')"
+        [disabled]="!hasTombola()"
         (click)="claimWin('tombola')"
       >
         🏆 TOMBOLA
       </button>
     </div>
   </div>
+  @if (pendingWin()) {
+  <div class="win-checking">
+    <div class="spinner-border text-warning"></div>
 
+    <span>
+      Verifica {{ pendingWin() }} in corso...
+    </span>
+  </div>
+  }
   }
 </div>

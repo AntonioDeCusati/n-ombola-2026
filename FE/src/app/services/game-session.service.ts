@@ -8,6 +8,7 @@ const STORAGE_KEY = 'tombola_session';
 interface StoredSession {
   role: UserRole;
   roomId: string | null;
+  room: Room | null;
   playerId: string | null;
   playerName: string | null;
   cartella: Cartella | null;
@@ -83,9 +84,26 @@ export class GameSessionService {
     return !room.claimedWins.some((w) => w.type === winType);
   }
 
+  updateExtractedNumbers(numbers: number[]): void {
+    const room = this.room();
+
+    if (!room) {
+      return;
+    }
+
+    this.room.set({
+      ...room,
+      extractedNumbers: numbers,
+    });
+
+    this.persist();
+  }
+
   private restoreSession(): void {
     const stored = this.getStoredSession();
     if (!stored) return;
+
+     this.room.set(stored.room);
     this.role.set(stored.role);
     this.playerId.set(stored.playerId);
     this.playerName.set(stored.playerName);
@@ -95,6 +113,7 @@ export class GameSessionService {
   private persist(): void {
     const data: StoredSession = {
       role: this.role(),
+      room: this.room(),
       roomId: this.room()?.id ?? null,
       playerId: this.playerId(),
       playerName: this.playerName(),

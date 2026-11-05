@@ -5,7 +5,6 @@ import { SocketService } from '../../services/socket.service';
 import { WinType } from '../../models/tombola.models';
 import { toSignal } from '@angular/core/rxjs-interop';
 
-
 //TODO: Implementare metodi per disabilitiare i pulsanti di quaterna cinquina e tombola in base alle condizioni di vincita
 //TODO: implementare la logica per rimanere sempre in ascolto dei numeri che vengono lanciati
 //TODO: imlementare la logica per la visualizzazione della verifca della vincita e la conferma o meno da parte del banco
@@ -25,6 +24,7 @@ export class Giocatore implements OnInit {
 
   protected playerName = signal('');
   protected roomCode = signal('');
+  protected readonly pendingWin = signal<WinType | null>(null);
 
   protected readonly connected = toSignal(this.socket.onConnectionChanged(), {
     initialValue: this.socket.isConnected(),
@@ -54,11 +54,22 @@ export class Giocatore implements OnInit {
     const stored = this.session.getStoredSession();
 
     if (stored?.roomId) {
-      from(this.socket.getRoomState(stored.roomId))
+      from(
+        this.socket.joinRoom(
+          stored.roomId,
+          stored.playerName ?? '',
+          stored.playerId ?? undefined,
+        ),
+      )
         .pipe(
-          filter((response) => response.success && !!response.room),
+          filter((response) => response.success),
           tap((response) => {
-            this.session.updateRoom(response.room!);
+            this.session.setPlayerSession(
+              response.room!,
+              response.cartella!,
+              response.playerId!,
+              stored.playerName ?? '',
+            );
           }),
         )
         .subscribe();
@@ -89,7 +100,6 @@ export class Giocatore implements OnInit {
   protected canClaimWinType(winType: WinType): boolean {
     return this.session.canClaimWinType(winType);
   }
-
   protected claimWin(winType: WinType): void {
     const roomId = this.session.roomId();
     const playerId = this.session.playerId();
@@ -97,6 +107,8 @@ export class Giocatore implements OnInit {
     if (!roomId || !playerId) {
       return;
     }
+
+    this.pendingWin.set(winType);
 
     from(this.socket.claimWin(roomId, playerId, winType)).subscribe();
   }
@@ -133,16 +145,52 @@ export class Giocatore implements OnInit {
     );
   }
 
+  protected hasQuaterna(): boolean {
+    const card = this.cartella();
+
+    if (!card) {
+      return false;
+    }
+
+    return card.grid.some(
+      (row) =>
+        row.filter((n) => n !== null && this.session.isNumberExtracted(n))
+          .length >= 4,
+    );
+  }
+
+  protected hasCinquina(): boolean {
+    const card = this.cartella();
+
+    if (!card) {
+      return false;
+    }
+
+    return card.grid.some(
+      (row) =>
+        row.filter((n) => n !== null && this.session.isNumberExtracted(n))
+          .length >= 5,
+    );
+  }
+
+  protected hasTombola(): boolean {
+    const card = this.cartella();
+
+    if (!card) {
+      return false;
+    }
+
+    return card.numbers.every((number) =>
+      this.session.isNumberExtracted(number),
+    );
+  }
+
   private listenNumberExtracted(): void {
     this.socket
       .onNumberExtracted()
       .pipe(
-        filter(() => !!this.session.roomId()),
-        switchMap(() => this.socket.getRoomState(this.session.roomId()!)),
-        filter((response) => response.success && !!response.room),
-        // take(1),
-        tap((response) => {
-          this.session.updateRoom(response.room!);
+        tap((event) => {
+          this.session.updateExtractedNumbers(event.extractedNumbers);
         }),
       )
       .subscribe();
@@ -152,8 +200,12 @@ export class Giocatore implements OnInit {
     this.socket
       .onWinConfirmed()
       .pipe(
-        take(1),
-        tap(({ room }) => this.session.updateRoom(room)),
+        tap(({ room }) => {
+          this.pendingWin.set(null);
+          this.session.updateRoom(room);
+
+          alert('✅ Vincita confermata!');
+        }),
       )
       .subscribe();
   }
@@ -162,8 +214,12 @@ export class Giocatore implements OnInit {
     this.socket
       .onWinRejected()
       .pipe(
-        take(1),
-        tap(({ room }) => this.session.updateRoom(room)),
+        tap(({ room }) => {
+          this.pendingWin.set(null);
+          this.session.updateRoom(room);
+
+          alert('❌ Vincita rifiutata');
+        }),
       )
       .subscribe();
   }

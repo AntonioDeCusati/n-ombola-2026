@@ -77,7 +77,6 @@ export class LobbyDesk implements OnInit {
   }
 
   protected startGame(): void {
-
     const roomId = this.room()?.id;
 
     if (!roomId) {
@@ -87,12 +86,10 @@ export class LobbyDesk implements OnInit {
     from(
       this.socket.startGame(roomId),
     ).subscribe((response) => {
-      console.log(response)
       if (!response.success) {
         return;
       }
-    this.router.navigate(['/banco']);
-
+      this.router.navigate(['/banco']);
     });
   }
 
