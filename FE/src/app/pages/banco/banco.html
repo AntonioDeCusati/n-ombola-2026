@@ -1,6 +1,6 @@
 <div class="game-page">
   <header class="christmas-header">
-        <button class="header-action" (click)="goBack()">
+    <button class="header-action" (click)="goBack()">
       <i class="bi bi-box-arrow-left"></i>
       Esci
     </button>
@@ -19,7 +19,6 @@
       <div class="last-number">{{ lastNumber() ?? '--' }}</div>
 
       <div class="number-counter">Estratti {{ extractedCount() }}/90</div>
-
       <button
         class="extract-btn"
         [disabled]="loading()"
@@ -27,6 +26,19 @@
       >
         🎲 ESTRAI NUMERO
       </button>
+      @if (autoExtraction()) {
+      <button class="auto-card" (click)="toggleAutoExtraction()">
+        <div class="auto-title">🤖 Estrazione automatica attiva</div>
+
+        <div class="auto-countdown">
+          ⏳ Prossimo numero tra {{ countdown() }}s
+        </div>
+      </button>
+      } @if (!autoExtraction()) {
+      <button class="auto-card inactive" (click)="toggleAutoExtraction()">
+        <div class="auto-title">▶️ Attiva estrazione automatica</div>
+      </button>
+      }
     </div>
   </section>
 

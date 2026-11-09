@@ -1,17 +1,13 @@
 :host {
 
   background:
-    radial-gradient(
-      circle at top right,
-      rgba(236,0,140,.10),
-      transparent 30%
-    ),
+    radial-gradient(circle at top right,
+      rgba(236, 0, 140, .10),
+      transparent 30%),
 
-    radial-gradient(
-      circle at bottom left,
-      rgba(255,182,193,.10),
-      transparent 30%
-    ),
+    radial-gradient(circle at bottom left,
+      rgba(255, 182, 193, .10),
+      transparent 30%),
 
     #f9fafc;
 }
@@ -27,10 +23,8 @@
   pointer-events: none;
 
   background-image:
-    radial-gradient(
-      rgba(255,255,255,.9) 1px,
-      transparent 1px
-    );
+    radial-gradient(rgba(255, 255, 255, .9) 1px,
+      transparent 1px);
 
   background-size:
     60px 60px;
@@ -143,21 +137,17 @@
   border-radius: 32px;
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       #ffffff,
-      #fff4fa
-    );
+      #fff4fa);
 
   border: 2px solid #ffd8ec;
 
   box-shadow:
-    0 10px 30px rgba(
-      236,
+    0 10px 30px rgba(236,
       0,
       140,
-      .08
-    );
+      .08);
 }
 
 .number-label {
@@ -180,9 +170,9 @@
   color: #ec008c;
 
   text-shadow:
-    0 0 10px rgba(236,0,140,.25),
-    0 0 25px rgba(236,0,140,.25),
-    0 0 45px rgba(236,0,140,.15);
+    0 0 10px rgba(236, 0, 140, .25),
+    0 0 25px rgba(236, 0, 140, .25),
+    0 0 45px rgba(236, 0, 140, .15);
 
   animation:
     pop-number .45s ease;
@@ -208,11 +198,9 @@
   border-radius: 24px;
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       #ff2ea5,
-      #ec008c
-    );
+      #ec008c);
 
   color: white;
 
@@ -222,12 +210,10 @@
   cursor: pointer;
 
   box-shadow:
-    0 15px 35px rgba(
-      236,
+    0 15px 35px rgba(236,
       0,
       140,
-      .25
-    );
+      .25);
 
   transition: .25s;
 }
@@ -238,6 +224,110 @@
 
 .extract-btn:disabled {
   opacity: .5;
+}
+
+.auto-status {
+  margin-top: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 12px 24px;
+
+  border-radius: 999px;
+
+  background: rgba(240, 0, 140, 0.08);
+  border: 1px solid rgba(240, 0, 140, 0.15);
+
+  color: #f0008c;
+  font-weight: 700;
+
+  cursor: pointer;
+  transition: .25s;
+}
+
+.auto-status:hover {
+  background: rgba(240, 0, 140, 0.12);
+}
+
+.auto-card {
+  margin: 18px auto;
+  padding: 14px 20px;
+
+  width: fit-content;
+
+  border-radius: 18px;
+
+  background: rgba(255, 0, 140, 0.05);
+
+  border: 1px solid rgba(255, 0, 140, 0.15);
+
+  backdrop-filter: blur(8px);
+}
+
+.auto-title {
+  color: #ff008c;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.auto-countdown {
+  margin-top: 6px;
+
+  color: #64748b;
+
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  text-align: center;
+}
+
+.auto-toggle-btn {
+  margin-top: 12px;
+
+  background: transparent;
+  border: none;
+
+  color: #ff008c;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: .2s;
+}
+
+.auto-toggle-btn:hover {
+  transform: scale(1.05);
+}
+
+.auto-card {
+  margin-top: 14px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 18px;
+
+  border-radius: 999px;
+
+  background: rgba(255, 0, 140, 0.06);
+
+  border: 1px solid rgba(255, 0, 140, 0.12);
+
+  color: #ff008c;
+
+  font-size: .85rem;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: all .25s ease;
+}
+
+.auto-card:hover {
+  transform: translateY(-2px);
 }
 
 /* ------------------------------- */
@@ -287,11 +377,9 @@
 .number-cell.extracted {
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       #ff2ea5,
-      #ec008c
-    );
+      #ec008c);
 
   border-color: #ec008c;
 
@@ -301,11 +389,9 @@
 .number-cell.latest {
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       #f59e0b,
-      #fbbf24
-    );
+      #fbbf24);
 
   border-color: #f59e0b;
 
@@ -314,12 +400,10 @@
   transform: scale(1.15);
 
   box-shadow:
-    0 0 30px rgba(
-      245,
+    0 0 30px rgba(245,
       158,
       11,
-      .5
-    );
+      .5);
 
   animation:
     pulse 1.2s infinite;
@@ -348,22 +432,18 @@
 
   0% {
     box-shadow:
-      0 0 0 0 rgba(
-        245,
+      0 0 0 0 rgba(245,
         158,
         11,
-        .7
-      );
+        .7);
   }
 
   100% {
     box-shadow:
-      0 0 0 20px rgba(
-        245,
+      0 0 0 20px rgba(245,
         158,
         11,
-        0
-      );
+        0);
   }
 }
 
